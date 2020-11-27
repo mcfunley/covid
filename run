@@ -1,9 +1,11 @@
 #!/bin/bash
 [[ -d covid-19-data ]] || git clone git@github.com:nytimes/covid-19-data.git
+mkdir -p population
+
+[[ -f population/co-est2019-alldata.csv ]] || curl -s https://www2.census.gov/programs-surveys/popest/datasets/2010-2019/counties/totals/co-est2019-alldata.csv > population/co-est2019-alldata.csv
 
 pushd covid-19-data
 git pull --rebase
 popd
 
-head -1 covid-19-data/us-counties.csv > jefferson.csv
-grep "Jefferson,Pen" covid-19-data/us-counties.csv >> jefferson.csv
+./stats.py
